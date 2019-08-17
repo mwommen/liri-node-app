@@ -102,14 +102,14 @@ function concertThis(value) {
 
             var datetime = response.data[i].datetime; //Saves datetime response into a variable
             var dateArr = datetime.split('T'); //Attempting to split the date and time in the response
-console.log("HELLO" , dateArr)
+console.log("HELLO" , )
             var concertResults = 
             
                 "--------------------------------------------------------------------" +
                     "\nVenue Name: " + response.data[i].venue.name + 
                     
                     "\nVenue Location: " + response.data[i].venue.city +
-                    "\nDate of the Event: " + moment(dateArr[0], "MM-DD-YYYY"); //dateArr[0] should be the date separated from the time
+                    "\nDate of the Event: " + moment(dateArr[0]).format("MM-DD-YYYY"); //dateArr[0] should be the date separated from the time
             console.log(concertResults);
         }
     })
