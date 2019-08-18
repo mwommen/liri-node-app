@@ -24,8 +24,9 @@ for (var i = 2; i < nodeArgs.length; i++) {
     movieName += nodeArgs[i];
   }
 }
+
 function movieThis(value) {
-let queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
+let queryUrl = "http://www.omdbapi.com/?t=" + value + "&y=&plot=short&apikey=trilogy";
 
 axios.get(queryUrl).then(
   function(response) {
@@ -78,24 +79,7 @@ axios.get(queryUrl).then(
 
 
 
-
-// BandsInTown API to grab band info 
-
-// let bandURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp"
-// axios.get(bandUrl).then(
-//   function(response) {
-//       var bandInfo = 
-//       "---------------" +
-//       //Grab Name of Venue
-//       "\nRelease Year: " + response.data.Venue +
-//       //Grab the Venue location
-//       "\nRelease Year: " + response.data.Location +
-//       //Grab date of event
-//       "\nRelease Year: " + response.data.Date;
-//   });
-
 function concertThis(value) {
-    console.log("This is being called")
     axios.get("https://rest.bandsintown.com/artists/" + value + "/events?app_id=codingbootcamp")
     .then(function(response) {  
         for (var i = 0; i < response.data.length; i++) {
@@ -116,11 +100,9 @@ console.log("HELLO" , )
     .catch(function (error) {
         console.log(error);
     });
-        
-
 }
 
-
+// commands for specifying what API to grab data from 
 switch (command) {
     case "concert-this":
         concertThis(value);
@@ -136,3 +118,4 @@ switch (command) {
     //     break;
 
 };
+
