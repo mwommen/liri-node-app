@@ -1,7 +1,8 @@
 require("dotenv").config();
 var keys=require("./keys.js");
+var Spotify = require('node-spotify-api');
 
-// var fs = require('fs');
+ var fs = require('fs');
 var moment = require('moment');
 moment().format();
 
@@ -12,7 +13,7 @@ var nodeArgs = process.argv;
 var movieName = "";
 var command = process.argv[2];
 let value = process.argv[3];
-
+commandHandler(command, value);
 
 
 //for-loop  to handle the inclusion of "+"s
@@ -58,27 +59,15 @@ axios.get(queryUrl).then(
       console.log("---------------Data---------------");
       console.log(error.response.data);
     } else if (error.request) {
-      // The request was made but no response was received
-      // `error.request` is an object that comes back with details pertaining to the error that occurred.
       console.log(error.request);
     } else {
-      // Something happened in setting up the request that triggered an Error
       console.log("Error", error.message);
     }
     console.log(error.config);
   });
 }
 
-
-// Using Spotify API to retreive 
-//   var Spotify = require('node-spotify-api');
-//  var Spotify = new Spotify(keys.spotify);
-
-//   process.env.SPOTIFY_ID
-
-
-
-
+//Use axios to grab data from bands in town
 function concertThis(value) {
     axios.get("https://rest.bandsintown.com/artists/" + value + "/events?app_id=codingbootcamp")
     .then(function(response) {  
@@ -102,20 +91,63 @@ console.log("HELLO" , )
     });
 }
 
+// Using Spotify API to retreive 
+  var spotify = new Spotify(keys);
+
+//   process.env.SPOTIFY_ID
+
+function spotifySong(value) {
+    console.log(value);
+
+
+spotify.search({ type: 'track', query: value || 'All the small things'}, function(err, data) {
+  if (err) {
+    return console.log('Error occurred: ' + err);
+  }
+ 
+console.log(data.tracks.items[0]); 
+});
+};
+
+function doThis(){
+    //Read from soem file
+    fs.readFile('random.txt', 'utf8',function(err, data) {
+        if (err) throw err;
+        console.log(data);
+        //Parse returned data so we have a command and a value
+        var split = data.split(',');
+        var command = split[0];
+        var value = split[1];
+        //invoke commandHandler with correct args
+        commandHandler(command, value)
+    });
+}
+
+
+
+
+
+
+
+function commandHandler(command, value) {
+
+
 // commands for specifying what API to grab data from 
 switch (command) {
     case "concert-this":
         concertThis(value);
         break;
-    // case "spotify-this-song":
-    //     spotifySong(value);
-    //     break;
+     case "spotify-this-song":
+        spotifySong(value);
+         break;
     case "movie-this":
         movieThis(value);
         break;
-    // case "do-what-it-says":
-    //     doThis(value);
-    //     break;
+     case "do-what-it-says":
+         doThis(value);
+         break;
 
 };
+
+}
 
