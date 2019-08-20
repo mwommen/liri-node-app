@@ -91,31 +91,12 @@ console.log("HELLO" , )
     });
 }
 
-// // Using Spotify API to retreive song information 
-//   var spotify = new Spotify(keys);
-// //   process.env.SPOTIFY_ID
-// function spotifySong(value) {
-//     console.log(value);
-// spotify.search({ type: 'track', query: value || 'All the small things'
-
-// }, function(err, data) {
-//   if (err) {
-//     return console.log('Error occurred: ' + err);
-//   }
- 
-// console.log(data.tracks.items[0]); 
-// });
-// };
-
-
-
-
 function spotifySong(value) {
     if(!value){
         value = "The Sign";
     }
     var spotify = new Spotify(keys);
-    
+
     spotify.search({ type: 'track', query: value })
     .then(function(response) {
         for (var i = 0; i < 5; i++) {
@@ -143,9 +124,6 @@ function doThis(){
         commandHandler(command, value)
     });
 }
-
-
-
 
  function commandHandler(command, value) {
 
