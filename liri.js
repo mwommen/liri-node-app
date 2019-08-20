@@ -91,24 +91,45 @@ console.log("HELLO" , )
     });
 }
 
-// Using Spotify API to retreive 
-  var spotify = new Spotify(keys);
+// // Using Spotify API to retreive song information 
+//   var spotify = new Spotify(keys);
+// //   process.env.SPOTIFY_ID
+// function spotifySong(value) {
+//     console.log(value);
+// spotify.search({ type: 'track', query: value || 'All the small things'
 
-//   process.env.SPOTIFY_ID
+// }, function(err, data) {
+//   if (err) {
+//     return console.log('Error occurred: ' + err);
+//   }
+ 
+// console.log(data.tracks.items[0]); 
+// });
+// };
+
+
+
 
 function spotifySong(value) {
-    console.log(value);
-
-
-spotify.search({ type: 'track', query: value || 'All the small things'}, function(err, data) {
-  if (err) {
-    return console.log('Error occurred: ' + err);
-  }
- 
-console.log(data.tracks.items[0]); 
-});
-};
-
+    if(!value){
+        value = "The Sign";
+    }
+    var spotify = new Spotify(keys);
+    
+    spotify.search({ type: 'track', query: value })
+    .then(function(response) {
+        for (var i = 0; i < 5; i++) {
+            var spotifyResults = 
+                "--------------------------------------------------------------------" +
+                    "\nArtist(s): " + response.tracks.items[i].artists[0].name + 
+                    "\nSong Name: " + response.tracks.items[i].name +
+                    "\nAlbum Name: " + response.tracks.items[i].album.name +
+                    "\nPreview Link: " + response.tracks.items[i].preview_url;
+                    
+            console.log(spotifyResults);
+        }
+    })
+}
 function doThis(){
     //Read from soem file
     fs.readFile('random.txt', 'utf8',function(err, data) {
@@ -126,10 +147,7 @@ function doThis(){
 
 
 
-
-
-
-function commandHandler(command, value) {
+ function commandHandler(command, value) {
 
 
 // commands for specifying what API to grab data from 
