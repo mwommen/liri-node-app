@@ -7,16 +7,13 @@ var moment = require('moment');
 moment().format();
 
 var axios = require("axios");
-// Store all of the arguments in an array
 var nodeArgs = process.argv;
-//variable to input movie title 
 var movieName = "";
 var command = process.argv[2];
 let value = process.argv[3];
 commandHandler(command, value);
 
-
-//for-loop  to handle the inclusion of "+"s
+//for-loop  to handle the inclusion of "+"s when title is more than one word 
 for (var i = 2; i < nodeArgs.length; i++) {
 
   if (i > 2 && i < nodeArgs.length) {
@@ -40,8 +37,6 @@ axios.get(queryUrl).then(
     "\nMovie Title: " + response.data.Title +
     // grab IMDB rating 
     "\nIMDB Rating: " + response.data.imdbRating +
-    // grab  Rotten Tomatoes rating
-
     // grab country produced 
     "\nCountry Produced: " + response.data.Country +
     // grab language 
@@ -75,12 +70,9 @@ function concertThis(value) {
 
             var datetime = response.data[i].datetime; //Saves datetime response into a variable
             var dateArr = datetime.split('T'); //Attempting to split the date and time in the response
-console.log("HELLO" , )
             var concertResults = 
-            
                 "--------------------------------------------------------------------" +
                     "\nVenue Name: " + response.data[i].venue.name + 
-                    
                     "\nVenue Location: " + response.data[i].venue.city +
                     "\nDate of the Event: " + moment(dateArr[0]).format("MM-DD-YYYY"); //dateArr[0] should be the date separated from the time
             console.log(concertResults);
@@ -112,15 +104,13 @@ function spotifySong(value) {
     })
 }
 function doThis(){
-    //Read from soem file
+    //Read from random.txt using FS
     fs.readFile('random.txt', 'utf8',function(err, data) {
         if (err) throw err;
         console.log(data);
-        //Parse returned data so we have a command and a value
         var split = data.split(',');
         var command = split[0];
         var value = split[1];
-        //invoke commandHandler with correct args
         commandHandler(command, value)
     });
 }
@@ -144,6 +134,5 @@ switch (command) {
          break;
 
 };
-
 }
 
